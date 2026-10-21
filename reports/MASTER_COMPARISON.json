@@ -1,0 +1,58 @@
+[
+  {
+    "Experiment": "baseline_noaug",
+    "Architecture": "BASELINE",
+    "Data Augmentation": false,
+    "Class Weighted": true,
+    "Parameters": "422,566",
+    "Test Accuracy (%)": 58.84,
+    "Macro F1 (%)": 56.7,
+    "Weighted F1 (%)": 60.53,
+    "Single Latency MPS (ms)": 8.56,
+    "Single Latency CPU (ms)": 15.25,
+    "Batch-32 FPS (MPS)": "N/A",
+    "Total Errors": 156
+  },
+  {
+    "Experiment": "baseline_aug",
+    "Architecture": "BASELINE",
+    "Data Augmentation": true,
+    "Class Weighted": true,
+    "Parameters": "422,566",
+    "Test Accuracy (%)": 50.92,
+    "Macro F1 (%)": 48.46,
+    "Weighted F1 (%)": 52.03,
+    "Single Latency MPS (ms)": 11.59,
+    "Single Latency CPU (ms)": 18.84,
+    "Batch-32 FPS (MPS)": "N/A",
+    "Total Errors": 186
+  },
+  {
+    "Experiment": "mobilenet_aug",
+    "Architecture": "MOBILENET",
+    "Data Augmentation": true,
+    "Class Weighted": true,
+    "Parameters": "1,524,006",
+    "Test Accuracy (%)": 91.03,
+    "Macro F1 (%)": 90.54,
+    "Weighted F1 (%)": 90.99,
+    "Single Latency MPS (ms)": 12.96,
+    "Single Latency CPU (ms)": 56.31,
+    "Batch-32 FPS (MPS)": "N/A",
+    "Total Errors": 34
+  },
+  {
+    "Experiment": "resnet_aug",
+    "Architecture": "RESNET",
+    "Data Augmentation": true,
+    "Class Weighted": true,
+    "Parameters": "11,179,590",
+    "Test Accuracy (%)": 91.82,
+    "Macro F1 (%)": 90.55,
+    "Weighted F1 (%)": 91.84,
+    "Single Latency MPS (ms)": 14.81,
+    "Single Latency CPU (ms)": 12.94,
+    "Batch-32 FPS (MPS)": "N/A",
+    "Total Errors": 31
+  }
+]

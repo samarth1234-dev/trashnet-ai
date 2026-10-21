@@ -1,0 +1,41 @@
+{
+  "model_name": "resnet",
+  "checkpoint": "checkpoints/resnet_aug/best_model.pth",
+  "benchmarks": {
+    "cpu": {
+      "single_latency": {
+        "mean_ms": 12.94,
+        "std_ms": 1.84,
+        "median_p50_ms": 12.48,
+        "p95_ms": 15.93,
+        "p99_ms": 20.73,
+        "min_ms": 11.41,
+        "max_ms": 24.08
+      },
+      "throughput_fps": {
+        "1": 84.3,
+        "8": 62.5,
+        "16": 26.8,
+        "32": 23.9
+      }
+    },
+    "mps": {
+      "single_latency": {
+        "mean_ms": 14.81,
+        "std_ms": 3.02,
+        "median_p50_ms": 16.27,
+        "p95_ms": 18.03,
+        "p99_ms": 19.1,
+        "min_ms": 8.55,
+        "max_ms": 19.72
+      },
+      "throughput_fps": {
+        "1": 93.1,
+        "8": 168.8,
+        "16": 180.2,
+        "32": 174.6
+      }
+    }
+  },
+  "parameters": 11179590
+}

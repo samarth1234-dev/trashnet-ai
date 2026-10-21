@@ -1,0 +1,31 @@
+# Python virtual environment
+venv/
+env/
+.venv/
+.env
+
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.DS_Store
+
+# Large datasets & zip (Render uses bundled static samples for demo)
+data/dataset-resized.zip
+data/dataset-resized/
+data/uploads/*
+!data/uploads/.gitkeep
+
+# Checkpoints: Keep the lightweight production MobileNet (5.9 MB)
+# Ignore large 43MB ResNet and scratch baseline checkpoints to keep GitHub clone fast
+checkpoints/resnet_aug/
+checkpoints/baseline_aug/
+checkpoints/baseline_noaug/
+checkpoints/test_*/
+!checkpoints/mobilenet_aug/best_model.pth
+
+# Logs
+*.log
+web.log
+__MACOSX/

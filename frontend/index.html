@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrashNet AI - Smart Waste Classification</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cardboard: '#d97706',
+            glass: '#059669',
+            metal: '#0284c7',
+            paper: '#2563eb',
+            plastic: '#7c3aed',
+            trash: '#dc2626',
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @keyframes pulse-subtle {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.85; }
+    }
+    .animate-subtle { animation: pulse-subtle 3s infinite ease-in-out; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-blue-600 selection:text-white">
+
+  <!-- Header -->
+  <header class="border-b border-slate-800 bg-slate-900/60 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-3.5 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/20 text-white font-bold text-lg">
+          <i class="fa-solid fa-recycle"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-lg font-bold tracking-tight text-white">TrashNet Vision</h1>
+            <span class="text-[11px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full">MobileNetV3 91.0%</span>
+          </div>
+          <p class="text-xs text-slate-400">Automated 6-Class Optical Sorting Pipeline</p>
+        </div>
+      </div>
+
+      <!-- Backend Connection Pill -->
+      <div class="flex items-center gap-2 bg-slate-800/80 border border-slate-700/60 rounded-lg px-3 py-1.5 text-xs">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" id="status-indicator"></span>
+        <span class="text-slate-400">API:</span>
+        <input id="api-url" type="text" value="" placeholder="http://127.0.0.1:5001" 
+               class="bg-transparent text-slate-200 border-none outline-none text-xs w-48 sm:w-64 focus:ring-1 focus:ring-blue-500 rounded px-1" />
+        <button id="btn-ping" title="Test Connection" class="text-slate-400 hover:text-white transition">
+          <i class="fa-solid fa-arrow-rotate-right"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 max-w-6xl w-full mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+    <!-- Left Column: Input & Controls (5 cols) -->
+    <section class="lg:col-span-5 space-y-6">
+
+      <!-- Upload Card -->
+      <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 shadow-xl">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+            <i class="fa-solid fa-camera text-blue-400"></i> Waste Image Input
+          </h2>
+          <span class="text-xs text-slate-500">JPG, PNG, WebP</span>
+        </div>
+
+        <!-- Drop Zone -->
+        <div id="drop-zone" class="relative group border-2 border-dashed border-slate-700 hover:border-blue-500 rounded-xl p-8 text-center cursor-pointer transition-all duration-200 bg-slate-950/40 hover:bg-blue-950/10 flex flex-col items-center justify-center min-h-[220px]">
+          <input type="file" id="file-input" accept="image/*" capture="environment" class="hidden" />
+          
+          <div id="upload-prompt" class="space-y-3">
+            <div class="w-14 h-14 mx-auto rounded-full bg-slate-800/80 flex items-center justify-center text-slate-400 group-hover:text-blue-400 group-hover:scale-110 transition duration-200">
+              <i class="fa-solid fa-cloud-arrow-up text-2xl"></i>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-slate-200">Click to upload or drag & drop</p>
+              <p class="text-xs text-slate-500 mt-1">Supports camera snapshot on mobile</p>
+            </div>
+          </div>
+
+          <!-- Image Preview -->
+          <div id="preview-wrapper" class="hidden relative w-full h-56 rounded-lg overflow-hidden border border-slate-800">
+            <img id="image-preview" src="" alt="Waste Preview" class="w-full h-full object-contain bg-black/40" />
+            <button id="btn-clear" class="absolute top-2 right-2 bg-slate-900/80 hover:bg-red-900/80 text-slate-300 hover:text-white p-2 rounded-lg text-xs backdrop-blur border border-slate-700 transition">
+              <i class="fa-solid fa-xmark"></i> Change Image
+            </button>
+          </div>
+        </div>
+
+        <!-- Confidence Threshold Slider -->
+        <div class="mt-6 pt-5 border-t border-slate-800 space-y-2">
+          <div class="flex justify-between items-center text-xs">
+            <label for="threshold-slider" class="font-medium text-slate-300 flex items-center gap-1.5">
+              <i class="fa-solid fa-sliders text-amber-400"></i> Confidence Threshold (&tau;)
+            </label>
+            <span id="threshold-val" class="font-mono font-bold text-blue-400 bg-blue-950/50 border border-blue-800/40 px-2 py-0.5 rounded">65%</span>
+          </div>
+          <input type="range" id="threshold-slider" min="0.40" max="0.95" step="0.05" value="0.65"
+                 class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500" />
+          <p class="text-[11px] text-slate-500 leading-tight">
+            Predictions below threshold are flagged as <strong>Uncertain</strong> and diverted for manual review.
+          </p>
+        </div>
+      </div>
+
+      <!-- Quick Test Samples -->
+      <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 shadow-xl">
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+          <i class="fa-solid fa-flask text-emerald-400"></i> Instant Test Samples
+        </h3>
+        <div id="sample-grid" class="grid grid-cols-4 sm:grid-cols-6 gap-2">
+          <div class="text-xs text-slate-500 col-span-full py-2 text-center">Loading test samples...</div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Right Column: Results & Probabilities (7 cols) -->
+    <section class="lg:col-span-7 space-y-6">
+
+      <!-- Result Card -->
+      <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl relative min-h-[380px] flex flex-col">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-5">
+          <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+            <i class="fa-solid fa-chart-pie text-purple-400"></i> Classification Result
+          </h2>
+          <span id="model-badge" class="text-xs bg-slate-800 text-slate-400 border border-slate-700 px-2.5 py-0.5 rounded-full font-mono">MobileNetV3</span>
+        </div>
+
+        <!-- Initial Placeholder State -->
+        <div id="empty-state" class="flex-1 flex flex-col items-center justify-center text-center p-8 space-y-3">
+          <div class="w-16 h-16 rounded-2xl bg-slate-800/40 border border-slate-800 flex items-center justify-center text-slate-600">
+            <i class="fa-solid fa-layer-group text-3xl"></i>
+          </div>
+          <div>
+            <h3 class="text-slate-300 font-medium text-sm">No Image Evaluated</h3>
+            <p class="text-slate-500 text-xs max-w-sm mt-1">Upload an image or select a sample on the left to see instant classification and confidence scores.</p>
+          </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading-state" class="hidden flex-1 flex flex-col items-center justify-center text-center p-8 space-y-4">
+          <div class="w-10 h-10 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin"></div>
+          <p class="text-xs text-slate-400 animate-pulse font-mono">Running deep neural inference...</p>
+        </div>
+
+        <!-- Active Result State -->
+        <div id="result-state" class="hidden space-y-6">
+
+          <!-- Top Verdict Banner -->
+          <div id="verdict-banner" class="p-5 rounded-xl border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-all">
+            <div class="space-y-1">
+              <span id="status-pill" class="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md inline-block">ACCEPTED</span>
+              <div class="flex items-baseline gap-3">
+                <h3 id="predicted-class" class="text-3xl font-extrabold capitalize text-white tracking-tight">Plastic</h3>
+                <span id="confidence-score" class="text-xl font-bold font-mono text-emerald-400">92.4%</span>
+              </div>
+            </div>
+            <div id="action-box" class="text-xs max-w-xs text-slate-300 bg-slate-950/40 p-2.5 rounded-lg border border-slate-800/60">
+              <i class="fa-solid fa-arrow-turn-down text-blue-400 mr-1.5"></i>
+              <span id="action-text">Route item to [PLASTIC] recycling bin.</span>
+            </div>
+          </div>
+
+          <!-- Probability Bars -->
+          <div class="space-y-3">
+            <div class="flex justify-between items-center text-xs text-slate-400 font-medium">
+              <span>Softmax Class Distribution</span>
+              <span>Confidence</span>
+            </div>
+
+            <div id="probability-bars" class="space-y-2.5">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Specs Footer -->
+          <div class="pt-4 border-t border-slate-800/80 grid grid-cols-3 gap-3 text-center text-xs">
+            <div class="bg-slate-950/50 p-2.5 rounded-lg border border-slate-800">
+              <div class="text-[10px] text-slate-500 uppercase">Input Size</div>
+              <div class="font-mono font-medium text-slate-300">224 x 224 RGB</div>
+            </div>
+            <div class="bg-slate-950/50 p-2.5 rounded-lg border border-slate-800">
+              <div class="text-[10px] text-slate-500 uppercase">Inference Time</div>
+              <div class="font-mono font-medium text-slate-300">~12.9 ms</div>
+            </div>
+            <div class="bg-slate-950/50 p-2.5 rounded-lg border border-slate-800">
+              <div class="text-[10px] text-slate-500 uppercase">Target Classes</div>
+              <div class="font-mono font-medium text-slate-300">6 Categories</div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Architecture Callout -->
+      <div class="bg-slate-900/40 border border-slate-800/60 rounded-xl p-4 text-xs text-slate-400 flex items-start gap-3">
+        <i class="fa-solid fa-circle-info text-blue-400 text-sm mt-0.5"></i>
+        <div class="space-y-1">
+          <p class="font-medium text-slate-300">Deployment Architecture</p>
+          <p class="leading-relaxed">This frontend talks directly to the Waste Classifier REST API on Render / Localhost via <code class="text-blue-300 font-mono">POST /api/predict</code>. Works seamlessly as a unified Flask app or decoupled static web client on Vercel/Netlify.</p>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer class="border-t border-slate-800/80 py-4 text-center text-xs text-slate-500">
+    TrashNet Vision Pipeline &bull; Stanford CS 229 &bull; PyTorch & Flask Production Deployment
+  </footer>
+
+  <!-- Application Logic -->
+  <script>
+    const CLASS_COLORS = {
+      cardboard: { bg: 'bg-amber-500', text: 'text-amber-400', border: 'border-amber-500/30', light: 'bg-amber-950/30' },
+      glass:     { bg: 'bg-emerald-500', text: 'text-emerald-400', border: 'border-emerald-500/30', light: 'bg-emerald-950/30' },
+      metal:     { bg: 'bg-sky-500', text: 'text-sky-400', border: 'border-sky-500/30', light: 'bg-sky-950/30' },
+      paper:     { bg: 'bg-blue-500', text: 'text-blue-400', border: 'border-blue-500/30', light: 'bg-blue-950/30' },
+      plastic:   { bg: 'bg-purple-500', text: 'text-purple-400', border: 'border-purple-500/30', light: 'bg-purple-950/30' },
+      trash:     { bg: 'bg-red-500', text: 'text-red-400', border: 'border-red-500/30', light: 'bg-red-950/30' }
+    };
+
+    const dropZone = document.getElementById('drop-zone');
+    const fileInput = document.getElementById('file-input');
+    const uploadPrompt = document.getElementById('upload-prompt');
+    const previewWrapper = document.getElementById('preview-wrapper');
+    const imagePreview = document.getElementById('image-preview');
+    const btnClear = document.getElementById('btn-clear');
+    const thresholdSlider = document.getElementById('threshold-slider');
+    const thresholdVal = document.getElementById('threshold-val');
+    const sampleGrid = document.getElementById('sample-grid');
+    const apiUrlInput = document.getElementById('api-url');
+    const btnPing = document.getElementById('btn-ping');
+    const statusIndicator = document.getElementById('status-indicator');
+
+    const emptyState = document.getElementById('empty-state');
+    const loadingState = document.getElementById('loading-state');
+    const resultState = document.getElementById('result-state');
+
+    const verdictBanner = document.getElementById('verdict-banner');
+    const statusPill = document.getElementById('status-pill');
+    const predictedClass = document.getElementById('predicted-class');
+    const confidenceScore = document.getElementById('confidence-score');
+    const actionText = document.getElementById('action-text');
+    const probabilityBars = document.getElementById('probability-bars');
+
+    let currentFile = null;
+    let currentRelPath = null;
+
+    // Detect default API Base URL (if served from Flask, use origin; else localhost:5001)
+    const defaultApi = (window.location.protocol.startsWith('http') && window.location.port !== '') 
+      ? window.location.origin 
+      : 'http://127.0.0.1:5001';
+    apiUrlInput.value = defaultApi;
+
+    // Ping API
+    async function pingApi() {
+      const base = apiUrlInput.value.replace(/\/+$/, '');
+      statusIndicator.className = "w-2 h-2 rounded-full bg-amber-400 animate-ping";
+      try {
+        const res = await fetch(`${base}/health`);
+        if (res.ok) {
+          statusIndicator.className = "w-2 h-2 rounded-full bg-emerald-400";
+        } else {
+          statusIndicator.className = "w-2 h-2 rounded-full bg-red-400";
+        }
+      } catch (e) {
+        statusIndicator.className = "w-2 h-2 rounded-full bg-red-400";
+      }
+    }
+    btnPing.addEventListener('click', pingApi);
+    pingApi();
+
+    // Threshold Slider
+    thresholdSlider.addEventListener('input', (e) => {
+      thresholdVal.textContent = Math.round(e.target.value * 100) + '%';
+      if (currentFile || currentRelPath) {
+        triggerPrediction();
+      }
+    });
+
+    // File Input Triggers
+    dropZone.addEventListener('click', (e) => {
+      if (e.target !== btnClear && !btnClear.contains(e.target)) {
+        fileInput.click();
+      }
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files[0]) {
+        handleFileSelect(e.target.files[0]);
+      }
+    });
+
+    // Drag and drop
+    ['dragenter', 'dragover'].forEach(name => {
+      dropZone.addEventListener(name, (e) => { e.preventDefault(); dropZone.classList.add('border-blue-500'); });
+    });
+    ['dragleave', 'drop'].forEach(name => {
+      dropZone.addEventListener(name, (e) => { e.preventDefault(); dropZone.classList.remove('border-blue-500'); });
+    });
+    dropZone.addEventListener('drop', (e) => {
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        handleFileSelect(e.dataTransfer.files[0]);
+      }
+    });
+
+    function handleFileSelect(file) {
+      currentFile = file;
+      currentRelPath = null;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        imagePreview.src = e.target.result;
+        uploadPrompt.classList.add('hidden');
+        previewWrapper.classList.remove('hidden');
+        triggerPrediction();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    btnClear.addEventListener('click', (e) => {
+      e.stopPropagation();
+      currentFile = null;
+      currentRelPath = null;
+      fileInput.value = '';
+      imagePreview.src = '';
+      previewWrapper.classList.add('hidden');
+      uploadPrompt.classList.remove('hidden');
+      emptyState.classList.remove('hidden');
+      resultState.classList.add('hidden');
+    });
+
+    // Load Samples
+    async function loadSamples() {
+      const base = apiUrlInput.value.replace(/\/+$/, '');
+      try {
+        const res = await fetch(`${base}/api/samples`);
+        if (!res.ok) return;
+        const samples = await res.json();
+        sampleGrid.innerHTML = '';
+        samples.forEach(s => {
+          const btn = document.createElement('button');
+          btn.className = "group relative aspect-square rounded-lg overflow-hidden border border-slate-800 hover:border-blue-500 transition focus:outline-none";
+          btn.title = `${s.class_name}: ${s.rel_path}`;
+          const fullImgUrl = s.url.startsWith('http') ? s.url : `${base}${s.url}`;
+          btn.innerHTML = `
+            <img src="${fullImgUrl}" alt="${s.class_name}" class="w-full h-full object-cover group-hover:scale-110 transition duration-200" />
+            <span class="absolute inset-x-0 bottom-0 text-[10px] bg-slate-900/80 backdrop-blur py-0.5 text-center capitalize text-slate-300">${s.class_name}</span>
+          `;
+          btn.addEventListener('click', () => {
+            currentRelPath = s.rel_path;
+            currentFile = null;
+            imagePreview.src = fullImgUrl;
+            uploadPrompt.classList.add('hidden');
+            previewWrapper.classList.remove('hidden');
+            triggerPrediction();
+          });
+          sampleGrid.appendChild(btn);
+        });
+      } catch (err) {
+        sampleGrid.innerHTML = '<div class="text-xs text-slate-500 col-span-full py-2 text-center">Samples available once connected to API</div>';
+      }
+    }
+    loadSamples();
+
+    // Trigger Prediction
+    async function triggerPrediction() {
+      if (!currentFile && !currentRelPath) return;
+
+      emptyState.classList.add('hidden');
+      loadingState.classList.remove('hidden');
+      resultState.classList.add('hidden');
+
+      const base = apiUrlInput.value.replace(/\/+$/, '');
+      const formData = new FormData();
+      formData.append('threshold', thresholdSlider.value);
+
+      if (currentFile) {
+        formData.append('file', currentFile);
+      } else if (currentRelPath) {
+        formData.append('rel_path', currentRelPath);
+      }
+
+      try {
+        const res = await fetch(`${base}/api/predict`, {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await res.json();
+        loadingState.classList.add('hidden');
+
+        if (!res.ok) {
+          alert(data.error || 'Prediction failed');
+          emptyState.classList.remove('hidden');
+          return;
+        }
+
+        renderResult(data);
+      } catch (err) {
+        loadingState.classList.add('hidden');
+        alert("Failed to connect to Waste Classifier API. Ensure the backend is running!");
+        emptyState.classList.remove('hidden');
+      }
+    }
+
+    function renderResult(data) {
+      resultState.classList.remove('hidden');
+
+      const isConfident = data.is_confident;
+      const pred = data.predicted_class;
+      const theme = CLASS_COLORS[pred] || CLASS_COLORS.plastic;
+
+      predictedClass.textContent = pred;
+      confidenceScore.textContent = `${data.confidence_percentage}%`;
+      actionText.textContent = data.recommended_action;
+
+      if (isConfident) {
+        verdictBanner.className = `p-5 rounded-xl border ${theme.border} ${theme.light} flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4`;
+        statusPill.className = `text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md inline-block bg-emerald-500/20 text-emerald-400 border border-emerald-500/30`;
+        statusPill.textContent = "ACCEPTED & VERIFIED";
+      } else {
+        verdictBanner.className = `p-5 rounded-xl border border-amber-500/40 bg-amber-950/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4`;
+        statusPill.className = `text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md inline-block bg-amber-500/20 text-amber-400 border border-amber-500/30`;
+        statusPill.textContent = "UNCERTAIN (LOW CONFIDENCE)";
+      }
+
+      // Render probability bars
+      probabilityBars.innerHTML = '';
+      Object.entries(data.all_probabilities).forEach(([cls, prob]) => {
+        const pct = (prob * 100).toFixed(1);
+        const col = CLASS_COLORS[cls] || CLASS_COLORS.plastic;
+        const isWinner = cls === pred;
+
+        const row = document.createElement('div');
+        row.className = "space-y-1";
+        row.innerHTML = `
+          <div class="flex justify-between items-center text-xs">
+            <span class="capitalize font-medium ${isWinner ? 'text-white font-semibold' : 'text-slate-400'} flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full ${col.bg}"></span> ${cls}
+            </span>
+            <span class="font-mono text-xs ${isWinner ? 'text-white font-bold' : 'text-slate-400'}">${pct}%</span>
+          </div>
+          <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+            <div class="h-full ${col.bg} transition-all duration-500 rounded-full" style="width: ${pct}%"></div>
+          </div>
+        `;
+        probabilityBars.appendChild(row);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,503 @@
+{
+  "total_test_samples": 379,
+  "total_mistakes": 31,
+  "error_rate_pct": 8.18,
+  "top_failures": [
+    {
+      "rel_path": "glass/glass186.jpg",
+      "true_label": "glass",
+      "true_idx": 1,
+      "pred_label": "metal",
+      "pred_idx": 2,
+      "confidence": 0.9991157650947571,
+      "probabilities": {
+        "cardboard": 0.0,
+        "glass": 0.0008,
+        "metal": 0.9991,
+        "paper": 0.0,
+        "plastic": 0.0,
+        "trash": 0.0
+      }
+    },
+    {
+      "rel_path": "trash/trash112.jpg",
+      "true_label": "trash",
+      "true_idx": 5,
+      "pred_label": "metal",
+      "pred_idx": 2,
+      "confidence": 0.9974804520606995,
+      "probabilities": {
+        "cardboard": 0.0,
+        "glass": 0.0001,
+        "metal": 0.9975,
+        "paper": 0.0001,
+        "plastic": 0.0006,
+        "trash": 0.0016
+      }
+    },
+    {
+      "rel_path": "cardboard/cardboard294.jpg",
+      "true_label": "cardboard",
+      "true_idx": 0,
+      "pred_label": "paper",
+      "pred_idx": 3,
+      "confidence": 0.967747688293457,
+      "probabilities": {
+        "cardboard": 0.021,
+        "glass": 0.0044,
+        "metal": 0.0,
+        "paper": 0.9677,
+        "plastic": 0.0053,
+        "trash": 0.0015
+      }
+    },
+    {
+      "rel_path": "trash/trash107.jpg",
+      "true_label": "trash",
+      "true_idx": 5,
+      "pred_label": "plastic",
+      "pred_idx": 4,
+      "confidence": 0.9676374793052673,
+      "probabilities": {
+        "cardboard": 0.0005,
+        "glass": 0.0092,
+        "metal": 0.0004,
+        "paper": 0.0042,
+        "plastic": 0.9676,
+        "trash": 0.018
+      }
+    },
+    {
+      "rel_path": "trash/trash5.jpg",
+      "true_label": "trash",
+      "true_idx": 5,
+      "pred_label": "paper",
+      "pred_idx": 3,
+      "confidence": 0.958791971206665,
+      "probabilities": {
+        "cardboard": 0.0028,
+        "glass": 0.0012,
+        "metal": 0.0002,
+        "paper": 0.9588,
+        "plastic": 0.0024,
+        "trash": 0.0346
+      }
+    },
+    {
+      "rel_path": "plastic/plastic361.jpg",
+      "true_label": "plastic",
+      "true_idx": 4,
+      "pred_label": "glass",
+      "pred_idx": 1,
+      "confidence": 0.9534069299697876,
+      "probabilities": {
+        "cardboard": 0.0001,
+        "glass": 0.9534,
+        "metal": 0.0014,
+        "paper": 0.0,
+        "plastic": 0.044,
+        "trash": 0.0011
+      }
+    },
+    {
+      "rel_path": "cardboard/cardboard41.jpg",
+      "true_label": "cardboard",
+      "true_idx": 0,
+      "pred_label": "paper",
+      "pred_idx": 3,
+      "confidence": 0.9144704937934875,
+      "probabilities": {
+        "cardboard": 0.0802,
+        "glass": 0.0006,
+        "metal": 0.001,
+        "paper": 0.9145,
+        "plastic": 0.0015,
+        "trash": 0.0023
+      }
+    },
+    {
+      "rel_path": "paper/paper592.jpg",
+      "true_label": "paper",
+      "true_idx": 3,
+      "pred_label": "trash",
+      "pred_idx": 5,
+      "confidence": 0.8991273045539856,
+      "probabilities": {
+        "cardboard": 0.0055,
+        "glass": 0.0024,
+        "metal": 0.018,
+        "paper": 0.0493,
+        "plastic": 0.0258,
+        "trash": 0.8991
+      }
+    },
+    {
+      "rel_path": "glass/glass443.jpg",
+      "true_label": "glass",
+      "true_idx": 1,
+      "pred_label": "metal",
+      "pred_idx": 2,
+      "confidence": 0.8919652700424194,
+      "probabilities": {
+        "cardboard": 0.0004,
+        "glass": 0.0997,
+        "metal": 0.892,
+        "paper": 0.0002,
+        "plastic": 0.0063,
+        "trash": 0.0015
+      }
+    },
+    {
+      "rel_path": "paper/paper590.jpg",
+      "true_label": "paper",
+      "true_idx": 3,
+      "pred_label": "trash",
+      "pred_idx": 5,
+      "confidence": 0.8819012641906738,
+      "probabilities": {
+        "cardboard": 0.0002,
+        "glass": 0.0002,
+        "metal": 0.0003,
+        "paper": 0.0061,
+        "plastic": 0.1112,
+        "trash": 0.8819
+      }
+    },
+    {
+      "rel_path": "plastic/plastic1.jpg",
+      "true_label": "plastic",
+      "true_idx": 4,
+      "pred_label": "glass",
+      "pred_idx": 1,
+      "confidence": 0.8658496737480164,
+      "probabilities": {
+        "cardboard": 0.0011,
+        "glass": 0.8658,
+        "metal": 0.0371,
+        "paper": 0.003,
+        "plastic": 0.0889,
+        "trash": 0.004
+      }
+    },
+    {
+      "rel_path": "cardboard/cardboard128.jpg",
+      "true_label": "cardboard",
+      "true_idx": 0,
+      "pred_label": "paper",
+      "pred_idx": 3,
+      "confidence": 0.863516628742218,
+      "probabilities": {
+        "cardboard": 0.0483,
+        "glass": 0.0151,
+        "metal": 0.023,
+        "paper": 0.8635,
+        "plastic": 0.0328,
+        "trash": 0.0173
+      }
+    },
+    {
+      "rel_path": "metal/metal102.jpg",
+      "true_label": "metal",
+      "true_idx": 2,
+      "pred_label": "trash",
+      "pred_idx": 5,
+      "confidence": 0.8148872256278992,
+      "probabilities": {
+        "cardboard": 0.0,
+        "glass": 0.0002,
+        "metal": 0.1319,
+        "paper": 0.0004,
+        "plastic": 0.0526,
+        "trash": 0.8149
+      }
+    },
+    {
+      "rel_path": "glass/glass304.jpg",
+      "true_label": "glass",
+      "true_idx": 1,
+      "pred_label": "paper",
+      "pred_idx": 3,
+      "confidence": 0.7325275540351868,
+      "probabilities": {
+        "cardboard": 0.0016,
+        "glass": 0.2399,
+        "metal": 0.0013,
+        "paper": 0.7325,
+        "plastic": 0.0093,
+        "trash": 0.0154
+      }
+    },
+    {
+      "rel_path": "plastic/plastic441.jpg",
+      "true_label": "plastic",
+      "true_idx": 4,
+      "pred_label": "glass",
+      "pred_idx": 1,
+      "confidence": 0.6788709163665771,
+      "probabilities": {
+        "cardboard": 0.0009,
+        "glass": 0.6789,
+        "metal": 0.1362,
+        "paper": 0.0012,
+        "plastic": 0.1536,
+        "trash": 0.0291
+      }
+    },
+    {
+      "rel_path": "metal/metal310.jpg",
+      "true_label": "metal",
+      "true_idx": 2,
+      "pred_label": "plastic",
+      "pred_idx": 4,
+      "confidence": 0.6631247997283936,
+      "probabilities": {
+        "cardboard": 0.0366,
+        "glass": 0.0869,
+        "metal": 0.1503,
+        "paper": 0.0014,
+        "plastic": 0.6631,
+        "trash": 0.0616
+      }
+    },
+    {
+      "rel_path": "plastic/plastic4.jpg",
+      "true_label": "plastic",
+      "true_idx": 4,
+      "pred_label": "metal",
+      "pred_idx": 2,
+      "confidence": 0.6605437397956848,
+      "probabilities": {
+        "cardboard": 0.004,
+        "glass": 0.1176,
+        "metal": 0.6605,
+        "paper": 0.0105,
+        "plastic": 0.1496,
+        "trash": 0.0578
+      }
+    },
+    {
+      "rel_path": "plastic/plastic433.jpg",
+      "true_label": "plastic",
+      "true_idx": 4,
+      "pred_label": "metal",
+      "pred_idx": 2,
+      "confidence": 0.6527240872383118,
+      "probabilities": {
+        "cardboard": 0.0004,
+        "glass": 0.0113,
+        "metal": 0.6527,
+        "paper": 0.0039,
+        "plastic": 0.3051,
+        "trash": 0.0265
+      }
+    },
+    {
+      "rel_path": "plastic/plastic369.jpg",
+      "true_label": "plastic",
+      "true_idx": 4,
+      "pred_label": "metal",
+      "pred_idx": 2,
+      "confidence": 0.6180012226104736,
+      "probabilities": {
+        "cardboard": 0.0065,
+        "glass": 0.0259,
+        "metal": 0.618,
+        "paper": 0.0331,
+        "plastic": 0.3154,
+        "trash": 0.0011
+      }
+    },
+    {
+      "rel_path": "glass/glass134.jpg",
+      "true_label": "glass",
+      "true_idx": 1,
+      "pred_label": "plastic",
+      "pred_idx": 4,
+      "confidence": 0.609434187412262,
+      "probabilities": {
+        "cardboard": 0.0005,
+        "glass": 0.3326,
+        "metal": 0.0259,
+        "paper": 0.0041,
+        "plastic": 0.6094,
+        "trash": 0.0274
+      }
+    },
+    {
+      "rel_path": "glass/glass55.jpg",
+      "true_label": "glass",
+      "true_idx": 1,
+      "pred_label": "plastic",
+      "pred_idx": 4,
+      "confidence": 0.6082749962806702,
+      "probabilities": {
+        "cardboard": 0.0012,
+        "glass": 0.3824,
+        "metal": 0.004,
+        "paper": 0.0003,
+        "plastic": 0.6083,
+        "trash": 0.0038
+      }
+    },
+    {
+      "rel_path": "cardboard/cardboard286.jpg",
+      "true_label": "cardboard",
+      "true_idx": 0,
+      "pred_label": "paper",
+      "pred_idx": 3,
+      "confidence": 0.6076467037200928,
+      "probabilities": {
+        "cardboard": 0.3568,
+        "glass": 0.0001,
+        "metal": 0.0336,
+        "paper": 0.6076,
+        "plastic": 0.0006,
+        "trash": 0.0013
+      }
+    },
+    {
+      "rel_path": "glass/glass184.jpg",
+      "true_label": "glass",
+      "true_idx": 1,
+      "pred_label": "plastic",
+      "pred_idx": 4,
+      "confidence": 0.576921284198761,
+      "probabilities": {
+        "cardboard": 0.0186,
+        "glass": 0.2198,
+        "metal": 0.1583,
+        "paper": 0.0061,
+        "plastic": 0.5769,
+        "trash": 0.0203
+      }
+    },
+    {
+      "rel_path": "plastic/plastic364.jpg",
+      "true_label": "plastic",
+      "true_idx": 4,
+      "pred_label": "glass",
+      "pred_idx": 1,
+      "confidence": 0.575169026851654,
+      "probabilities": {
+        "cardboard": 0.0067,
+        "glass": 0.5752,
+        "metal": 0.0666,
+        "paper": 0.0367,
+        "plastic": 0.3141,
+        "trash": 0.0007
+      }
+    },
+    {
+      "rel_path": "plastic/plastic456.jpg",
+      "true_label": "plastic",
+      "true_idx": 4,
+      "pred_label": "metal",
+      "pred_idx": 2,
+      "confidence": 0.5531151294708252,
+      "probabilities": {
+        "cardboard": 0.0008,
+        "glass": 0.0003,
+        "metal": 0.5531,
+        "paper": 0.0033,
+        "plastic": 0.0984,
+        "trash": 0.344
+      }
+    },
+    {
+      "rel_path": "cardboard/cardboard99.jpg",
+      "true_label": "cardboard",
+      "true_idx": 0,
+      "pred_label": "paper",
+      "pred_idx": 3,
+      "confidence": 0.5284664630889893,
+      "probabilities": {
+        "cardboard": 0.2416,
+        "glass": 0.1407,
+        "metal": 0.0817,
+        "paper": 0.5285,
+        "plastic": 0.005,
+        "trash": 0.0025
+      }
+    },
+    {
+      "rel_path": "paper/paper263.jpg",
+      "true_label": "paper",
+      "true_idx": 3,
+      "pred_label": "trash",
+      "pred_idx": 5,
+      "confidence": 0.5009725093841553,
+      "probabilities": {
+        "cardboard": 0.127,
+        "glass": 0.0091,
+        "metal": 0.0095,
+        "paper": 0.2936,
+        "plastic": 0.0598,
+        "trash": 0.501
+      }
+    },
+    {
+      "rel_path": "plastic/plastic9.jpg",
+      "true_label": "plastic",
+      "true_idx": 4,
+      "pred_label": "metal",
+      "pred_idx": 2,
+      "confidence": 0.4839577376842499,
+      "probabilities": {
+        "cardboard": 0.0017,
+        "glass": 0.1214,
+        "metal": 0.484,
+        "paper": 0.0009,
+        "plastic": 0.3426,
+        "trash": 0.0494
+      }
+    },
+    {
+      "rel_path": "paper/paper225.jpg",
+      "true_label": "paper",
+      "true_idx": 3,
+      "pred_label": "trash",
+      "pred_idx": 5,
+      "confidence": 0.43548715114593506,
+      "probabilities": {
+        "cardboard": 0.1324,
+        "glass": 0.0124,
+        "metal": 0.0113,
+        "paper": 0.3669,
+        "plastic": 0.0415,
+        "trash": 0.4355
+      }
+    },
+    {
+      "rel_path": "plastic/plastic109.jpg",
+      "true_label": "plastic",
+      "true_idx": 4,
+      "pred_label": "glass",
+      "pred_idx": 1,
+      "confidence": 0.39366257190704346,
+      "probabilities": {
+        "cardboard": 0.3167,
+        "glass": 0.3937,
+        "metal": 0.0543,
+        "paper": 0.0149,
+        "plastic": 0.1743,
+        "trash": 0.046
+      }
+    },
+    {
+      "rel_path": "cardboard/cardboard392.jpg",
+      "true_label": "cardboard",
+      "true_idx": 0,
+      "pred_label": "paper",
+      "pred_idx": 3,
+      "confidence": 0.39073315262794495,
+      "probabilities": {
+        "cardboard": 0.2289,
+        "glass": 0.1723,
+        "metal": 0.1794,
+        "paper": 0.3907,
+        "plastic": 0.0273,
+        "trash": 0.0013
+      }
+    }
+  ]
+}

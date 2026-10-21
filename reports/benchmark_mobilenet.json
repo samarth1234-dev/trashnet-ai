@@ -1,0 +1,41 @@
+{
+  "model_name": "mobilenet",
+  "checkpoint": "checkpoints/mobilenet_aug/best_model.pth",
+  "benchmarks": {
+    "cpu": {
+      "single_latency": {
+        "mean_ms": 56.31,
+        "std_ms": 10.01,
+        "median_p50_ms": 52.01,
+        "p95_ms": 77.31,
+        "p99_ms": 93.84,
+        "min_ms": 47.82,
+        "max_ms": 98.12
+      },
+      "throughput_fps": {
+        "1": 19.9,
+        "8": 47.0,
+        "16": 18.1,
+        "32": 21.5
+      }
+    },
+    "mps": {
+      "single_latency": {
+        "mean_ms": 12.96,
+        "std_ms": 2.93,
+        "median_p50_ms": 11.7,
+        "p95_ms": 18.42,
+        "p99_ms": 19.42,
+        "min_ms": 9.27,
+        "max_ms": 19.88
+      },
+      "throughput_fps": {
+        "1": 83.1,
+        "8": 303.3,
+        "16": 517.9,
+        "32": 377.9
+      }
+    }
+  },
+  "parameters": 1524006
+}

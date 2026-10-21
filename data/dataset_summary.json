@@ -1,0 +1,111 @@
+{
+  "dataset_metadata": {
+    "name": "TrashNet",
+    "source_url": "https://github.com/garythung/trashnet",
+    "hf_mirror": "https://huggingface.co/datasets/garythung/trashnet",
+    "authors": "Gary Thung, Mindy Yang (Stanford CS 229)",
+    "paper": "Classification of Trash for Recyclability Status (2016)",
+    "version": "v1.0 (dataset-resized)",
+    "dimensions_standard": [
+      512,
+      384
+    ],
+    "channels": 3,
+    "color_space": "RGB"
+  },
+  "classes": [
+    "cardboard",
+    "glass",
+    "metal",
+    "paper",
+    "plastic",
+    "trash"
+  ],
+  "imbalance_analysis": {
+    "total_images": 2527,
+    "imbalance_ratio_max_to_min": 4.34,
+    "majority_class": "paper",
+    "minority_class": "trash",
+    "per_class": {
+      "cardboard": {
+        "count": 403,
+        "percentage": 15.95,
+        "inverse_freq_weight": 1.0451
+      },
+      "glass": {
+        "count": 501,
+        "percentage": 19.83,
+        "inverse_freq_weight": 0.8407
+      },
+      "metal": {
+        "count": 410,
+        "percentage": 16.22,
+        "inverse_freq_weight": 1.0272
+      },
+      "paper": {
+        "count": 594,
+        "percentage": 23.51,
+        "inverse_freq_weight": 0.709
+      },
+      "plastic": {
+        "count": 482,
+        "percentage": 19.07,
+        "inverse_freq_weight": 0.8738
+      },
+      "trash": {
+        "count": 137,
+        "percentage": 5.42,
+        "inverse_freq_weight": 3.0742
+      }
+    }
+  },
+  "split_summary": {
+    "seed": 42,
+    "clean_total": 2521,
+    "dropped_duplicates_count": 6,
+    "dropped_files": [
+      "glass/glass115.jpg",
+      "metal/metal91.jpg",
+      "glass/glass176.jpg",
+      "plastic/plastic152.jpg",
+      "glass/glass389.jpg",
+      "plastic/plastic332.jpg"
+    ],
+    "train": {
+      "count": 1764,
+      "percentage": 69.97,
+      "per_class": {
+        "paper": 416,
+        "glass": 348,
+        "plastic": 336,
+        "metal": 286,
+        "cardboard": 282,
+        "trash": 96
+      }
+    },
+    "val": {
+      "count": 378,
+      "percentage": 14.99,
+      "per_class": {
+        "paper": 89,
+        "glass": 75,
+        "plastic": 72,
+        "metal": 61,
+        "cardboard": 60,
+        "trash": 21
+      }
+    },
+    "test": {
+      "count": 379,
+      "percentage": 15.03,
+      "per_class": {
+        "paper": 89,
+        "glass": 75,
+        "plastic": 72,
+        "metal": 62,
+        "cardboard": 61,
+        "trash": 20
+      }
+    }
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "experiment_name": "mobilenet_aug",
+  "model_name": "mobilenet",
+  "checkpoint_path": "checkpoints/mobilenet_aug/best_model.pth",
+  "test_samples": 379,
+  "overall_accuracy": 91.03,
+  "macro_precision": 91.25,
+  "macro_recall": 90.18,
+  "macro_f1": 90.54,
+  "weighted_f1": 90.99,
+  "per_class": {
+    "cardboard": {
+      "precision": 94.83,
+      "recall": 90.16,
+      "f1_score": 92.44,
+      "support": 61.0
+    },
+    "glass": {
+      "precision": 92.11,
+      "recall": 93.33,
+      "f1_score": 92.72,
+      "support": 75.0
+    },
+    "metal": {
+      "precision": 86.76,
+      "recall": 95.16,
+      "f1_score": 90.77,
+      "support": 62.0
+    },
+    "paper": {
+      "precision": 87.63,
+      "recall": 95.51,
+      "f1_score": 91.4,
+      "support": 89.0
+    },
+    "plastic": {
+      "precision": 96.72,
+      "recall": 81.94,
+      "f1_score": 88.72,
+      "support": 72.0
+    },
+    "trash": {
+      "precision": 89.47,
+      "recall": 85.0,
+      "f1_score": 87.18,
+      "support": 20.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      55,
+      1,
+      0,
+      5,
+      0,
+      0
+    ],
+    [
+      0,
+      70,
+      3,
+      1,
+      1,
+      0
+    ],
+    [
+      1,
+      0,
+      59,
+      0,
+      1,
+      1
+    ],
+    [
+      2,
+      0,
+      1,
+      85,
+      0,
+      1
+    ],
+    [
+      0,
+      5,
+      4,
+      4,
+      59,
+      0
+    ],
+    [
+      0,
+      0,
+      1,
+      2,
+      0,
+      17
+    ]
+  ],
+  "confidence_threshold_tuning": [
+    {
+      "threshold": 0.0,
+      "accepted_samples": 379,
+      "rejected_samples": 0,
+      "coverage_pct": 100.0,
+      "accuracy_pct": 91.03,
+      "macro_f1_pct": 90.54
+    },
+    {
+      "threshold": 0.4,
+      "accepted_samples": 378,
+      "rejected_samples": 1,
+      "coverage_pct": 99.74,
+      "accuracy_pct": 91.27,
+      "macro_f1_pct": 90.74
+    },
+    {
+      "threshold": 0.5,
+      "accepted_samples": 372,
+      "rejected_samples": 7,
+      "coverage_pct": 98.15,
+      "accuracy_pct": 92.47,
+      "macro_f1_pct": 92.14
+    },
+    {
+      "threshold": 0.6,
+      "accepted_samples": 358,
+      "rejected_samples": 21,
+      "coverage_pct": 94.46,
+      "accuracy_pct": 93.02,
+      "macro_f1_pct": 92.53
+    },
+    {
+      "threshold": 0.7,
+      "accepted_samples": 343,
+      "rejected_samples": 36,
+      "coverage_pct": 90.5,
+      "accuracy_pct": 94.75,
+      "macro_f1_pct": 94.59
+    },
+    {
+      "threshold": 0.75,
+      "accepted_samples": 330,
+      "rejected_samples": 49,
+      "coverage_pct": 87.07,
+      "accuracy_pct": 95.45,
+      "macro_f1_pct": 95.16
+    },
+    {
+      "threshold": 0.8,
+      "accepted_samples": 319,
+      "rejected_samples": 60,
+      "coverage_pct": 84.17,
+      "accuracy_pct": 95.92,
+      "macro_f1_pct": 95.57
+    },
+    {
+      "threshold": 0.85,
+      "accepted_samples": 307,
+      "rejected_samples": 72,
+      "coverage_pct": 81.0,
+      "accuracy_pct": 95.77,
+      "macro_f1_pct": 95.36
+    },
+    {
+      "threshold": 0.9,
+      "accepted_samples": 284,
+      "rejected_samples": 95,
+      "coverage_pct": 74.93,
+      "accuracy_pct": 96.83,
+      "macro_f1_pct": 96.0
+    },
+    {
+      "threshold": 0.95,
+      "accepted_samples": 252,
+      "rejected_samples": 127,
+      "coverage_pct": 66.49,
+      "accuracy_pct": 98.02,
+      "macro_f1_pct": 97.45
+    }
+  ],
+  "total_failures": 34
+}
