@@ -1,0 +1,62 @@
+[
+  {
+    "class_name": "metal",
+    "rel_path": "metal_metal392.jpg",
+    "url": "/static/samples/metal_metal392.jpg"
+  },
+  {
+    "class_name": "metal",
+    "rel_path": "metal_metal290.jpg",
+    "url": "/static/samples/metal_metal290.jpg"
+  },
+  {
+    "class_name": "plastic",
+    "rel_path": "plastic_plastic430.jpg",
+    "url": "/static/samples/plastic_plastic430.jpg"
+  },
+  {
+    "class_name": "plastic",
+    "rel_path": "plastic_plastic410.jpg",
+    "url": "/static/samples/plastic_plastic410.jpg"
+  },
+  {
+    "class_name": "cardboard",
+    "rel_path": "cardboard_cardboard37.jpg",
+    "url": "/static/samples/cardboard_cardboard37.jpg"
+  },
+  {
+    "class_name": "cardboard",
+    "rel_path": "cardboard_cardboard244.jpg",
+    "url": "/static/samples/cardboard_cardboard244.jpg"
+  },
+  {
+    "class_name": "glass",
+    "rel_path": "glass_glass314.jpg",
+    "url": "/static/samples/glass_glass314.jpg"
+  },
+  {
+    "class_name": "glass",
+    "rel_path": "glass_glass404.jpg",
+    "url": "/static/samples/glass_glass404.jpg"
+  },
+  {
+    "class_name": "paper",
+    "rel_path": "paper_paper519.jpg",
+    "url": "/static/samples/paper_paper519.jpg"
+  },
+  {
+    "class_name": "paper",
+    "rel_path": "paper_paper232.jpg",
+    "url": "/static/samples/paper_paper232.jpg"
+  },
+  {
+    "class_name": "trash",
+    "rel_path": "trash_trash130.jpg",
+    "url": "/static/samples/trash_trash130.jpg"
+  },
+  {
+    "class_name": "trash",
+    "rel_path": "trash_trash113.jpg",
+    "url": "/static/samples/trash_trash113.jpg"
+  }
+]
