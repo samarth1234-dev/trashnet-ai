@@ -52,12 +52,12 @@
 
       <!-- Backend Connection Pill -->
       <div class="flex items-center gap-2 bg-slate-800/80 border border-slate-700/60 rounded-lg px-3 py-1.5 text-xs">
-        <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse" id="status-indicator"></span>
-        <span class="text-slate-400 font-medium">Render Backend:</span>
-        <input id="api-url" type="text" value="" placeholder="https://trashnet-ai.onrender.com" 
+        <span class="w-2 h-2 rounded-full bg-emerald-400" id="status-indicator"></span>
+        <span class="text-slate-400 font-medium">Backend:</span>
+        <input id="api-url" type="text" value="https://trashnet-ai.onrender.com" placeholder="https://trashnet-ai.onrender.com" 
                class="bg-slate-900 text-slate-200 border border-slate-700 rounded px-2 py-0.5 text-xs w-52 sm:w-64 focus:ring-1 focus:ring-blue-500 outline-none font-mono" />
-        <button id="btn-ping" title="Save & Test Connection" class="bg-blue-600 hover:bg-blue-500 text-white px-2 py-0.5 rounded text-xs transition flex items-center gap-1">
-          <i class="fa-solid fa-plug text-[10px]"></i> Connect
+        <button id="btn-ping" title="Test Connection" class="bg-blue-600/80 hover:bg-blue-500 text-white px-2 py-0.5 rounded text-xs transition flex items-center gap-1">
+          <i class="fa-solid fa-arrow-rotate-right text-[10px]"></i> Refresh
         </button>
       </div>
     </div>
@@ -272,14 +272,9 @@
 
     let currentFile = null;
 
-    // Detect & initialize API Base URL
-    const savedApi = localStorage.getItem('trashnet_api_url');
-    if (savedApi) {
-      apiUrlInput.value = savedApi;
-    } else {
-      const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-      apiUrlInput.value = isLocal ? 'http://127.0.0.1:5001' : 'https://trashnet-ai.onrender.com';
-    }
+    // Hardcoded permanent default API
+    const DEFAULT_API_URL = "https://trashnet-ai.onrender.com";
+    apiUrlInput.value = localStorage.getItem('trashnet_api_url') || DEFAULT_API_URL;
 
     // Ping API
     async function pingApi() {

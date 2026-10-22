@@ -46,22 +46,28 @@
             <h1 class="text-lg font-bold tracking-tight text-white">TrashNet Vision</h1>
             <span class="text-[11px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full">MobileNetV3 91.0%</span>
           </div>
-          <p class="text-xs text-slate-400">Automated 6-Class Optical Sorting Pipeline</p>
+          <p class="text-xs text-slate-400">Automated 6-Class Optical Sorting Pipeline &bull; Deployed on Vercel</p>
         </div>
       </div>
 
       <!-- Backend Connection Pill -->
       <div class="flex items-center gap-2 bg-slate-800/80 border border-slate-700/60 rounded-lg px-3 py-1.5 text-xs">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" id="status-indicator"></span>
-        <span class="text-slate-400">API:</span>
-        <input id="api-url" type="text" value="" placeholder="http://127.0.0.1:5001" 
-               class="bg-transparent text-slate-200 border-none outline-none text-xs w-48 sm:w-64 focus:ring-1 focus:ring-blue-500 rounded px-1" />
-        <button id="btn-ping" title="Test Connection" class="text-slate-400 hover:text-white transition">
-          <i class="fa-solid fa-arrow-rotate-right"></i>
+        <span class="w-2 h-2 rounded-full bg-emerald-400" id="status-indicator"></span>
+        <span class="text-slate-400 font-medium">Backend:</span>
+        <input id="api-url" type="text" value="https://trashnet-ai.onrender.com" placeholder="https://trashnet-ai.onrender.com" 
+               class="bg-slate-900 text-slate-200 border border-slate-700 rounded px-2 py-0.5 text-xs w-52 sm:w-64 focus:ring-1 focus:ring-blue-500 outline-none font-mono" />
+        <button id="btn-ping" title="Test Connection" class="bg-blue-600/80 hover:bg-blue-500 text-white px-2 py-0.5 rounded text-xs transition flex items-center gap-1">
+          <i class="fa-solid fa-arrow-rotate-right text-[10px]"></i> Refresh
         </button>
       </div>
     </div>
   </header>
+
+  <!-- Cold Start Alert Banner (hidden by default) -->
+  <div id="cold-start-banner" class="hidden bg-amber-950/70 border-b border-amber-600/40 text-amber-200 text-xs px-4 py-2.5 text-center flex items-center justify-center gap-2">
+    <i class="fa-solid fa-circle-notch fa-spin text-amber-400"></i>
+    <span>Render free tier spins down after inactivity. Connecting & waking up server (takes ~30s on first load)...</span>
+  </div>
 
   <!-- Main Content -->
   <main class="flex-1 max-w-6xl w-full mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -119,11 +125,14 @@
 
       <!-- Quick Test Samples -->
       <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 shadow-xl">
-        <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
-          <i class="fa-solid fa-flask text-emerald-400"></i> Instant Test Samples
-        </h3>
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+            <i class="fa-solid fa-flask text-emerald-400"></i> Instant Test Samples
+          </h3>
+          <span class="text-[11px] text-slate-500">1-click test</span>
+        </div>
         <div id="sample-grid" class="grid grid-cols-4 sm:grid-cols-6 gap-2">
-          <div class="text-xs text-slate-500 col-span-full py-2 text-center">Loading test samples...</div>
+          <!-- Dynamically populated -->
         </div>
       </div>
 
@@ -155,7 +164,7 @@
         <!-- Loading State -->
         <div id="loading-state" class="hidden flex-1 flex flex-col items-center justify-center text-center p-8 space-y-4">
           <div class="w-10 h-10 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin"></div>
-          <p class="text-xs text-slate-400 animate-pulse font-mono">Running deep neural inference...</p>
+          <p class="text-xs text-slate-400 animate-pulse font-mono">Running deep neural inference on Render backend...</p>
         </div>
 
         <!-- Active Result State -->
@@ -208,12 +217,12 @@
 
       </div>
 
-      <!-- Architecture Callout -->
+      <!-- Cloud Architecture Pill -->
       <div class="bg-slate-900/40 border border-slate-800/60 rounded-xl p-4 text-xs text-slate-400 flex items-start gap-3">
-        <i class="fa-solid fa-circle-info text-blue-400 text-sm mt-0.5"></i>
+        <i class="fa-solid fa-cloud-bolt text-blue-400 text-sm mt-0.5"></i>
         <div class="space-y-1">
-          <p class="font-medium text-slate-300">Deployment Architecture</p>
-          <p class="leading-relaxed">This frontend talks directly to the Waste Classifier REST API on Render / Localhost via <code class="text-blue-300 font-mono">POST /api/predict</code>. Works seamlessly as a unified Flask app or decoupled static web client on Vercel/Netlify.</p>
+          <p class="font-medium text-slate-300">Decoupled Production Architecture</p>
+          <p class="leading-relaxed">Frontend hosted globally on <span class="text-white font-medium">Vercel Edge CDN</span> &bull; AI Inference engine powered by PyTorch on <span class="text-white font-medium">Render Cloud</span>. Seamless communication enabled via Cross-Origin Resource Sharing (CORS).</p>
         </div>
       </div>
 
@@ -222,7 +231,7 @@
   </main>
 
   <footer class="border-t border-slate-800/80 py-4 text-center text-xs text-slate-500">
-    TrashNet Vision Pipeline &bull; Stanford CS 229 &bull; PyTorch & Flask Production Deployment
+    TrashNet Vision Pipeline &bull; Stanford CS 229 &bull; Deployed on Vercel & Render
   </footer>
 
   <!-- Application Logic -->
@@ -248,6 +257,7 @@
     const apiUrlInput = document.getElementById('api-url');
     const btnPing = document.getElementById('btn-ping');
     const statusIndicator = document.getElementById('status-indicator');
+    const coldStartBanner = document.getElementById('cold-start-banner');
 
     const emptyState = document.getElementById('empty-state');
     const loadingState = document.getElementById('loading-state');
@@ -261,22 +271,30 @@
     const probabilityBars = document.getElementById('probability-bars');
 
     let currentFile = null;
-    let currentRelPath = null;
 
-    // Detect default API Base URL (if served from Flask, use origin; else localhost:5001)
-    const defaultApi = (window.location.protocol.startsWith('http') && window.location.port !== '') 
-      ? window.location.origin 
-      : 'http://127.0.0.1:5001';
-    apiUrlInput.value = defaultApi;
+    // Hardcoded permanent default API
+    const DEFAULT_API_URL = "https://trashnet-ai.onrender.com";
+    apiUrlInput.value = localStorage.getItem('trashnet_api_url') || DEFAULT_API_URL;
 
     // Ping API
     async function pingApi() {
-      const base = apiUrlInput.value.replace(/\/+$/, '');
+      const base = apiUrlInput.value.trim().replace(/\/+$/, '');
+      if (!base) return;
+      localStorage.setItem('trashnet_api_url', base);
+
       statusIndicator.className = "w-2 h-2 rounded-full bg-amber-400 animate-ping";
+      coldStartBanner.classList.remove('hidden');
+
       try {
-        const res = await fetch(`${base}/health`);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 35000); // 35s timeout for Render cold start
+
+        const res = await fetch(`${base}/health`, { signal: controller.signal });
+        clearTimeout(timeoutId);
+
         if (res.ok) {
           statusIndicator.className = "w-2 h-2 rounded-full bg-emerald-400";
+          coldStartBanner.classList.add('hidden');
         } else {
           statusIndicator.className = "w-2 h-2 rounded-full bg-red-400";
         }
@@ -284,13 +302,20 @@
         statusIndicator.className = "w-2 h-2 rounded-full bg-red-400";
       }
     }
+
     btnPing.addEventListener('click', pingApi);
+    apiUrlInput.addEventListener('change', () => {
+      localStorage.setItem('trashnet_api_url', apiUrlInput.value.trim().replace(/\/+$/, ''));
+      pingApi();
+    });
+
+    // Check health on load
     pingApi();
 
     // Threshold Slider
     thresholdSlider.addEventListener('input', (e) => {
       thresholdVal.textContent = Math.round(e.target.value * 100) + '%';
-      if (currentFile || currentRelPath) {
+      if (currentFile) {
         triggerPrediction();
       }
     });
@@ -323,7 +348,6 @@
 
     function handleFileSelect(file) {
       currentFile = file;
-      currentRelPath = null;
       const reader = new FileReader();
       reader.onload = (e) => {
         imagePreview.src = e.target.result;
@@ -337,7 +361,6 @@
     btnClear.addEventListener('click', (e) => {
       e.stopPropagation();
       currentFile = null;
-      currentRelPath = null;
       fileInput.value = '';
       imagePreview.src = '';
       previewWrapper.classList.add('hidden');
@@ -346,56 +369,72 @@
       resultState.classList.add('hidden');
     });
 
-    // Load Samples
+    // Load Samples directly from Vercel static bundle (or fallback to Render API)
     async function loadSamples() {
-      const base = apiUrlInput.value.replace(/\/+$/, '');
+      let samples = [];
       try {
-        const res = await fetch(`${base}/api/samples`);
-        if (!res.ok) return;
-        const samples = await res.json();
-        sampleGrid.innerHTML = '';
-        samples.forEach(s => {
-          const btn = document.createElement('button');
-          btn.className = "group relative aspect-square rounded-lg overflow-hidden border border-slate-800 hover:border-blue-500 transition focus:outline-none";
-          btn.title = `${s.class_name}: ${s.rel_path}`;
-          const fullImgUrl = s.url.startsWith('http') ? s.url : `${base}${s.url}`;
-          btn.innerHTML = `
-            <img src="${fullImgUrl}" alt="${s.class_name}" class="w-full h-full object-cover group-hover:scale-110 transition duration-200" />
-            <span class="absolute inset-x-0 bottom-0 text-[10px] bg-slate-900/80 backdrop-blur py-0.5 text-center capitalize text-slate-300">${s.class_name}</span>
-          `;
-          btn.addEventListener('click', () => {
-            currentRelPath = s.rel_path;
-            currentFile = null;
-            imagePreview.src = fullImgUrl;
-            uploadPrompt.classList.add('hidden');
-            previewWrapper.classList.remove('hidden');
-            triggerPrediction();
-          });
-          sampleGrid.appendChild(btn);
-        });
-      } catch (err) {
-        sampleGrid.innerHTML = '<div class="text-xs text-slate-500 col-span-full py-2 text-center">Samples available once connected to API</div>';
+        // Try local static samples on Vercel first
+        const localRes = await fetch('samples/samples.json');
+        if (localRes.ok) {
+          samples = await localRes.json();
+        }
+      } catch (err) {}
+
+      if (samples.length === 0) {
+        try {
+          const base = apiUrlInput.value.trim().replace(/\/+$/, '');
+          const remoteRes = await fetch(`${base}/api/samples`);
+          if (remoteRes.ok) samples = await remoteRes.json();
+        } catch (err) {}
       }
+
+      if (samples.length === 0) {
+        sampleGrid.innerHTML = '<div class="text-xs text-slate-500 col-span-full py-2 text-center">Samples unavailable</div>';
+        return;
+      }
+
+      sampleGrid.innerHTML = '';
+      samples.forEach(s => {
+        const btn = document.createElement('button');
+        btn.className = "group relative aspect-square rounded-lg overflow-hidden border border-slate-800 hover:border-blue-500 transition focus:outline-none";
+        btn.title = `${s.class_name}: ${s.rel_path}`;
+        const localImgUrl = `samples/${s.rel_path}`;
+        btn.innerHTML = `
+          <img src="${localImgUrl}" alt="${s.class_name}" class="w-full h-full object-cover group-hover:scale-110 transition duration-200" />
+          <span class="absolute inset-x-0 bottom-0 text-[10px] bg-slate-900/80 backdrop-blur py-0.5 text-center capitalize text-slate-300">${s.class_name}</span>
+        `;
+        btn.addEventListener('click', async () => {
+          imagePreview.src = localImgUrl;
+          uploadPrompt.classList.add('hidden');
+          previewWrapper.classList.remove('hidden');
+
+          // Fetch image as blob and convert to File to send full binary to Render
+          try {
+            const imgRes = await fetch(localImgUrl);
+            const blob = await imgRes.blob();
+            currentFile = new File([blob], s.rel_path, { type: blob.type || 'image/jpeg' });
+            triggerPrediction();
+          } catch (e) {
+            alert('Failed to load sample image');
+          }
+        });
+        sampleGrid.appendChild(btn);
+      });
     }
     loadSamples();
 
-    // Trigger Prediction
+    // Trigger Prediction to Render Backend
     async function triggerPrediction() {
-      if (!currentFile && !currentRelPath) return;
+      if (!currentFile) return;
 
       emptyState.classList.add('hidden');
       loadingState.classList.remove('hidden');
       resultState.classList.add('hidden');
 
-      const base = apiUrlInput.value.replace(/\/+$/, '');
+      const base = apiUrlInput.value.trim().replace(/\/+$/, '');
       const formData = new FormData();
       formData.append('threshold', thresholdSlider.value);
-
-      if (currentFile) {
-        formData.append('file', currentFile);
-      } else if (currentRelPath) {
-        formData.append('rel_path', currentRelPath);
-      }
+      formData.append('file', currentFile);
 
       try {
         const res = await fetch(`${base}/api/predict`, {
@@ -415,7 +454,7 @@
         renderResult(data);
       } catch (err) {
         loadingState.classList.add('hidden');
-        alert("Failed to connect to Waste Classifier API. Ensure the backend is running!");
+        alert("Failed to connect to Render Backend. Check if the server is awake and the URL is correct!");
         emptyState.classList.remove('hidden');
       }
     }
